@@ -10,6 +10,10 @@ public class TestTest extends BaseTest {
         Page.getDriver().get(SITE);
         signInPage = homePage.actionButtonSignIn();
         checkPage = signInPage.signInMetod("dpastushenko1996@gmail.com", "1996baba");
-        checkPage.checkTestDone();
+        findItemPage = checkPage.checkTestDone();
+        addToCartPage = findItemPage.printItemName("soccer ball");
+        viewCartPage = addToCartPage.addToCart();
+        checkPage = viewCartPage.viewCartPage();
+        checkPage.cartCheck();
     }
 }

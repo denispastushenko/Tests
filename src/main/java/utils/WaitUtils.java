@@ -19,5 +19,14 @@ public class WaitUtils {
         element = (WebElement) wait.until(ExpectedConditions.visibilityOfElementLocated(by));
         return element;
     }
+    public static WebElement waitForElementForAddingCart(WebDriver driver,WebElement add ,int timeOutInSeconds) {
+        WebElement element;
+        FluentWait wait = new FluentWait(driver)
+                .withTimeout(timeOutInSeconds, TimeUnit.SECONDS)
+                .pollingEvery(200, TimeUnit.MILLISECONDS)
+                .ignoring(NoSuchElementException.class);
+        element = (WebElement) wait.until(ExpectedConditions.visibilityOf(add));
+        return element;
+    }
 }
 

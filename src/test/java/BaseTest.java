@@ -1,10 +1,7 @@
 import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.chrome.ChromeDriver;
-import pages.CheckPage;
-import pages.HomePage;
-import pages.Page;
-import pages.SignInPage;
+import pages.*;
 
 import java.awt.*;
 import java.net.MalformedURLException;
@@ -14,6 +11,9 @@ public class BaseTest {
     protected HomePage homePage;
     protected SignInPage signInPage;
     protected CheckPage checkPage;
+    protected FindItemPage findItemPage;
+    protected AddToCartPage addToCartPage;
+    protected ViewCartPage viewCartPage;
 
     @Before
     public void setUp() throws MalformedURLException, AWTException {
