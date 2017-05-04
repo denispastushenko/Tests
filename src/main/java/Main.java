@@ -28,15 +28,19 @@ public class Main {
 
         long finish1 = System.nanoTime();
         long timeConsumedNano1 = finish1 - start1;
-        System.out.println("\n Execution time in nano seconds : " + timeConsumedNano1);
+        System.out.println("\n Execution time in nano seconds : " + timeConsumedNano1 + "\n Third variant : ");
 
         if (timeConsumedNano > timeConsumedNano1){
+            long start3 = System.nanoTime();
             int amount = 1;
             for (int i = 0; i < amountOfIteration ; i++) {
                 System.out.println(Math.pow(2, amount++));
             }
-
+            long finish3 = System.nanoTime();
+            long timeConsumedNano3 = finish3 - start3;
+            System.out.println("\n Execution time in nano seconds : " + timeConsumedNano3);
         }
+        System.out.println("     " + timeConsumedNano + "     " + timeConsumedNano1 + "     " );
         //recursive();
     }
 
@@ -49,5 +53,6 @@ public class Main {
         if (example <= 0) {
             recursive();
         } else System.out.println("Success");
+        scanner.close();
     }
 }
