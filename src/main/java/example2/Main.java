@@ -33,11 +33,11 @@ public class Main {
         System.out.println(bigInteger.getLowestSetBit() + bigInteger.intValue());
 
 
+
+
         BigDecimal bigDecimal = new BigDecimal(24444477777777777777777777777777777777779909999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999.0);
         boolean result1 = bigDecimal instanceof BigDecimal;
         System.out.println("It is a success           " + result1 + "          " + bigDecimal);
         System.out.println(bigDecimal.intValue() * bigDecimal.intValue());
-
-        System.out.println(-8 | 7);
     }
 }
