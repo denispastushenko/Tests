@@ -1,10 +1,14 @@
 package apacheHttpComponents;
 
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.node.ObjectNode;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -15,12 +19,13 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.Map;
 
 import static org.apache.http.protocol.HTTP.USER_AGENT;
 
 public class MainClassExecutor {
     public static void main(String[] args) {
-        String urlForGetRequest = "https://www.instagram.com/valeria_bila/";
+        String urlForGetRequest = "https://www.instagram.com/valeria_bila/?__a=1";
 
         HttpClient httpClient = HttpClientBuilder.create().build();
         HttpGet httpGet = new HttpGet(urlForGetRequest);
@@ -29,24 +34,30 @@ public class MainClassExecutor {
         httpGet.addHeader("User-agent", USER_AGENT);
         try {
             HttpResponse httpResponse = httpClient.execute(httpGet);
-            System.out.println("Response-Code:   "  + httpResponse.getStatusLine().getStatusCode());
+            System.out.println("Response-Code:   " + httpResponse.getStatusLine().getStatusCode());
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpResponse.getEntity().getContent()));
             StringBuffer result = new StringBuffer();
             String line = "";
-            while ((line = bufferedReader.readLine()) != null)
-            {
+            while ((line = bufferedReader.readLine()) != null) {
                 result.append(line);
+
+            }
+            System.out.println(result);
+            String r = String.valueOf(result);
+            final ObjectNode node = new ObjectMapper().readValue(r, ObjectNode.class);
+
+            if (node.has("code")) {
+                System.out.println("value: " + node.get("code"));
             }
 
-            System.out.println(result);
-        } catch (IOException e) {e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
     }
 
 
-    public static Path downloadVideo(String sourceURL, String targetDirectory)
-    {
+    public static Path downloadVideo(String sourceURL, String targetDirectory) {
         URL url = null;
         try {
             url = new URL(sourceURL);
