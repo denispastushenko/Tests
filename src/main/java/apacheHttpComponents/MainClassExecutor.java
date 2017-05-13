@@ -1,63 +1,73 @@
 package apacheHttpComponents;
 
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.node.ObjectNode;
+import apacheHttpComponents.jsonfiles.Node;
+import apacheHttpComponents.jsonfiles.ResultData;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import org.apache.http.client.fluent.Request;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
-
-import static org.apache.http.protocol.HTTP.USER_AGENT;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 public class MainClassExecutor {
-    public static void main(String[] args) {
-        String urlForGetRequest = "https://www.instagram.com/valeria_bila/?__a=1";
+    private static List<String> stringList = new ArrayList<>();
+    public static final String FILE_WAY_FOR_VIDEO = "E:\\InstgramDownloadedSource\\videosOnly";
+    public static void main(String[] args) throws IOException {
+        Gson gson = new Gson();
+        BufferedReader bufferedReader;
+        bufferedReader = new BufferedReader(new FileReader("src\\resources\\data.json"));
+        ResultData resultData = gson.fromJson(bufferedReader, ResultData.class);
+        if (resultData != null) {
+            resultData.getUser()
+                    .getMedia()
+                    .getNodes()
+                    .stream()
+                    .filter(Node::getIsVideo)
+                    .map(Node::getCode).forEach(item -> {
+                String string = executeRequest(
+                        String.format("https://www.instagram.com/p/%s?__a=1", item));
+                JsonObject jsonObject = new Gson().fromJson(string, JsonObject.class);
+                String result = jsonObject
+                        .get("graphql")
+                        .getAsJsonObject()
+                        .get("shortcode_media")
+                        .getAsJsonObject()
+                        .get("video_url")
+                        .toString();
+                stringList.add(result.replace("\"",""));
 
-        HttpClient httpClient = HttpClientBuilder.create().build();
-        HttpGet httpGet = new HttpGet(urlForGetRequest);
-
-
-        httpGet.addHeader("User-agent", USER_AGENT);
-        try {
-            HttpResponse httpResponse = httpClient.execute(httpGet);
-            System.out.println("Response-Code:   " + httpResponse.getStatusLine().getStatusCode());
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpResponse.getEntity().getContent()));
-            StringBuffer result = new StringBuffer();
-            String line = "";
-            while ((line = bufferedReader.readLine()) != null) {
-                result.append(line);
-
-            }
-            System.out.println(result);
-            String r = String.valueOf(result);
-            final ObjectNode node = new ObjectMapper().readValue(r, ObjectNode.class);
-
-            if (node.has("code")) {
-                System.out.println("value: " + node.get("code"));
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
+            });
         }
+       new HashSet<>(stringList).
+                forEach(video ->
+                        downloadVideo(video, FILE_WAY_FOR_VIDEO));
+        System.out.println(stringList);
+        System.out.println(stringList.size());
+    }
 
+    private static String executeRequest(String url) {
+        try {
+            return Request.Get(url).execute().returnContent().asString();
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
 
     public static Path downloadVideo(String sourceURL, String targetDirectory) {
         URL url = null;
         try {
-            url = new URL(sourceURL);
+            url = new URL( sourceURL);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
