@@ -24,9 +24,8 @@ public class MainClassExecutor {
     public static final String FILE_WAY_FOR_VIDEO = "E:\\InstgramDownloadedSource\\videosOnly";
     public static void main(String[] args) throws IOException {
         Gson gson = new Gson();
-        BufferedReader bufferedReader;
-        bufferedReader = new BufferedReader(new FileReader("src\\resources\\data.json"));
-        ResultData resultData = gson.fromJson(bufferedReader, ResultData.class);
+        ResultData resultData = gson.fromJson(executeRequest("https://www.instagram.com/virusvideo/?__a=1")
+                , ResultData.class);
         if (resultData != null) {
             resultData.getUser()
                     .getMedia()
@@ -36,7 +35,7 @@ public class MainClassExecutor {
                     .map(Node::getCode).forEach(item -> {
                 String string = executeRequest(
                         String.format("https://www.instagram.com/p/%s?__a=1", item));
-                JsonObject jsonObject = new Gson().fromJson(string, JsonObject.class);
+                JsonObject jsonObject = gson.fromJson(string, JsonObject.class);
                 String result = jsonObject
                         .get("graphql")
                         .getAsJsonObject()
@@ -45,7 +44,6 @@ public class MainClassExecutor {
                         .get("video_url")
                         .toString();
                 stringList.add(result.replace("\"",""));
-
             });
         }
        new HashSet<>(stringList).
@@ -64,7 +62,7 @@ public class MainClassExecutor {
     }
 
 
-    public static Path downloadVideo(String sourceURL, String targetDirectory) {
+    private static Path downloadVideo(String sourceURL, String targetDirectory) {
         URL url = null;
         try {
             url = new URL( sourceURL);
