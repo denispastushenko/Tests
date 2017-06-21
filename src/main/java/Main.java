@@ -1,17 +1,23 @@
-import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        recursiveMethodExample();
+        int result = 1;
+        int digitForPow = 2;
+
+        for (int i = 0; i < 15; i++) {
+            result *= digitForPow;
+            System.out.println(result);
+        }
+
+        System.out.println("\n" + "Different way");
+
+        for (int i = 0; i < 15; System.out.println(digitForPow << result++), i++) {
+        }
     }
 
-    private static void recursiveMethodExample() {
-        System.out.println("Type your digit! It should be bigger than 0 : ");
-        Scanner scanner = new Scanner(System.in);
-        int example = scanner.nextInt();
 
-        if (example <= 0) {
-           recursiveMethodExample();
-        } else System.out.println("Success");
+
+    private static boolean function1() {
+        return true;
     }
 }
