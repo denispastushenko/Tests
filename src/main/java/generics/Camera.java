@@ -13,13 +13,15 @@ public class Camera extends Product {
         return model;
     }
 
-    public String getNameOfTheCamera() {
+    @Override
+    public String getName() {
         return nameOfTheCamera;
     }
 
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
+                .add("nameOfTheCamera", nameOfTheCamera)
                 .add("model", model)
                 .toString();
     }

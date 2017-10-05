@@ -14,7 +14,8 @@ public class Phone extends Product {
         return pixel;
     }
 
-    public String getNameOfThePhone() {
+    @Override
+    public String getName() {
         return nameOfThePhone;
     }
 
@@ -22,6 +23,7 @@ public class Phone extends Product {
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("pixel", pixel)
+                .add("nameOfThePhone", nameOfThePhone)
                 .toString();
     }
 }

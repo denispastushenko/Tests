@@ -27,9 +27,9 @@ public class Executor {
         example.setItem(new Product());
         cameraContainer.setItem(new Camera());
         phoneContainer.setItem(new Phone());
-        System.out.println(example.getItem().getNameOfTheProduct());
+        System.out.println(example.getItem().getName());
         System.out.println(phoneContainer.getItem().getPrice());
-        System.out.println(cameraContainer.getItem().getNameOfTheProduct());
+        System.out.println(cameraContainer.getItem().getName());
         System.out.println(phoneContainer.getItem());
 
         Container container = new Container<>();
@@ -61,7 +61,7 @@ public class Executor {
         // copy(phones,strings);//todo ask V why
         //copy(phones, examples);//todo ask V why
 
-        System.out.println(new Camera().getNameOfTheCamera().compareTo(example.getItem().getNameOfTheProduct()));
+        System.out.println(example.getItem().compareTo(new Camera()));
     }
 
     private static void copy(List<? extends Product> list1, List<? super Product> list) {
