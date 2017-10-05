@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by denys.pastushenko on 04/10/2017.
  */
-public class Container <T extends Product> {
+public class Container<T extends Product> {
 
     private T item;
 
@@ -20,14 +20,16 @@ public class Container <T extends Product> {
     }
 
 
-    void tryPrint1(List<? extends Product> list1){
-        System.out.println(list1);
+    public <T extends Product> T tryPrint(List<T> list1) {
+        return list1.stream().findFirst().get();//todo ask V why
     }
 
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("item", item)
-                .toString();
+    void tryPrint1(List<? super Product> list) {//todo ask V why
+        System.out.println(list);
+    }
+    void tryPrint3(List<? extends Product>list) {
+        System.out.println(list);//todo ask V why
     }
 }
+
+

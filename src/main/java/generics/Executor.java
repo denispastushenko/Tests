@@ -13,25 +13,28 @@ public class Executor {
         Container<Product> example = new Container<>();
         Container<Product> cameraContainer = new Container<>();
         Container<Product> phoneContainer = new Container<>();
-       //Container<String> stringContainer = new Container<String>();
+        //Container<String> stringContainer = new Container<String>(); //OK
 
 
-       // example.setItem(new Product());
-        //System.out.println(example.getItem().getName());
-       // System.out.println(example.getItem().getPrice());
-        //System.out.println(cameraContainer.getItem().getPrice());
-
-        //System.out.println(phoneContainer.getItem().getPixel());
+        example.setItem(new Product());
+        cameraContainer.setItem(new Camera());
+        phoneContainer.setItem(new Phone());
+        System.out.println(example.getItem().getName());
+        System.out.println(phoneContainer.getItem().getPrice());
+        System.out.println(cameraContainer.getItem().getName());
+        System.out.println(phoneContainer.getItem());
 
         Container container = new Container<>();
-        List<Container<Product>> containerList = new ArrayList<>();
-        containerList.add(example);
-        containerList.add(cameraContainer);
-        containerList.add(phoneContainer);
+        List<Camera> cameras = new ArrayList<>();
+        cameras.add(new Camera());
         List<Object> objectList = new ArrayList<>();
         objectList.add(9);
-        container.tryPrint1(objectList);
-        container.tryPrint1(containerList);
+        objectList.add(cameras);
+        objectList.add("Str");
+        container.tryPrint1(objectList);//todo ask V why
+        container.tryPrint3(objectList);//todo ask V why
+        //container.tryPrint1(container.tryPrint(cameras).getPrice());//todo ask V why
+        container.tryPrint(cameras);
 
     }
 }

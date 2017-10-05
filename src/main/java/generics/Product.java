@@ -1,13 +1,12 @@
 package generics;
 
-import com.google.common.base.MoreObjects;
 
-import java.util.List;
+import com.google.common.base.MoreObjects;
 
 /**
  * Created by denys.pastushenko on 04/10/2017.
  */
-public class Product implements Comparable<Product> {
+public class Product {
 
     private String name = "Name";
     private double price = 9.0;
@@ -21,8 +20,10 @@ public class Product implements Comparable<Product> {
     }
 
     @Override
-    public int compareTo(Product o) {
-        return 0;
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("name", name)
+                .add("price", price)
+                .toString();
     }
-
 }

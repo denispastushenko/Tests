@@ -1,5 +1,7 @@
 package generics;
 
+import com.google.common.base.MoreObjects;
+
 /**
  * Created by denys.pastushenko on 04/10/2017.
  */
@@ -12,7 +14,9 @@ public class Phone extends Product {
     }
 
     @Override
-    public int compareTo(Product o) {
-        return 0;
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("pixel", pixel)
+                .toString();
     }
 }
