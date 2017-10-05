@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class Executor {
 
-    private abstract class Example extends Product{
+    private abstract class Example extends Product {
         private String ex = "DDDD";
 
         public String getEx() {
@@ -27,9 +27,9 @@ public class Executor {
         example.setItem(new Product());
         cameraContainer.setItem(new Camera());
         phoneContainer.setItem(new Phone());
-        System.out.println(example.getItem().getName());
+        System.out.println(example.getItem().getNameOfTheProduct());
         System.out.println(phoneContainer.getItem().getPrice());
-        System.out.println(cameraContainer.getItem().getName());
+        System.out.println(cameraContainer.getItem().getNameOfTheProduct());
         System.out.println(phoneContainer.getItem());
 
         Container container = new Container<>();
@@ -58,11 +58,13 @@ public class Executor {
         container.tryPrint(cameras);
 
         copy(phones, objectList);
-       // copy(phones,strings);//todo ask V why
+        // copy(phones,strings);//todo ask V why
         //copy(phones, examples);//todo ask V why
+
+        System.out.println(new Camera().getNameOfTheCamera().compareTo(example.getItem().getNameOfTheProduct()));
     }
-    
-    private static void copy(List<? extends Product> list1, List<? super Product> list){
+
+    private static void copy(List<? extends Product> list1, List<? super Product> list) {
         list.addAll(list1);
         System.out.println(list);
     }
