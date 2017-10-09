@@ -61,7 +61,8 @@ public class Executor {
         // copy(phones,strings);//todo ask V why
         //copy(phones, examples);//todo ask V why
 
-        System.out.println(example.getItem().compareTo(new Camera()));
+        System.out.println("Product Names is equals: " + example.getItem().compareTo(new Phone()));// if equals (0 - 0)
+        System.out.println("Product Names is not equals: " + example.getItem().compareTo(new Camera())); // if not equals (-1 - -1)
     }
 
     private static void copy(List<? extends Product> list1, List<? super Product> list) {

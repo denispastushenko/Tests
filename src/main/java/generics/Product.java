@@ -8,7 +8,7 @@ import java.util.Comparator;
 /**
  * Created by denys.pastushenko on 04/10/2017.
  */
-public class Product implements Comparable<Product>, Common{
+public class Product implements Comparable<Product>{
 
     private String nameOfTheProduct = "Name11";
     private double price = 9.0;
@@ -32,7 +32,7 @@ public class Product implements Comparable<Product>, Common{
                 .compare(this, product);
     }
 
-    @Override
+
     public String getName() {
         return nameOfTheProduct;
     }

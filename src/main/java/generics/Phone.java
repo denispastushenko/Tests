@@ -8,7 +8,7 @@ import com.google.common.base.MoreObjects;
 public class Phone extends Product {
 
     private int pixel = 16;
-    private String nameOfThePhone = "Name";
+    private String nameOfThePhone = "Name11";
 
     public int getPixel() {
         return pixel;
