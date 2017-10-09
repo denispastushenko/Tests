@@ -25,8 +25,8 @@ public class Executor {
 
 
         example.setItem(new Product());
-        cameraContainer.setItem(new Camera());
-        phoneContainer.setItem(new Phone());
+        cameraContainer.setItem(new Camera("WorkCamera", "RX7"));
+        phoneContainer.setItem(new Phone(121, "Phone111"));
         System.out.println(example.getItem().getName());
         System.out.println(phoneContainer.getItem().getPrice());
         System.out.println(cameraContainer.getItem().getName());
@@ -35,10 +35,10 @@ public class Executor {
         Container container = new Container<>();
 
         List<Camera> cameras = new ArrayList<>();
-        cameras.add(new Camera());
+        cameras.add(new Camera("MovieCamera", "RX7"));
 
         List<Phone> phones = new ArrayList<>();
-        phones.add(new Phone());
+        phones.add(new Phone(122, "Phone122"));
 
         List<Object> objectList = new ArrayList<>();
         objectList.add(9);
@@ -61,8 +61,19 @@ public class Executor {
         // copy(phones,strings);//todo ask V why
         //copy(phones, examples);//todo ask V why
 
-        System.out.println("Product Names is equals: " + example.getItem().compareTo(new Phone()));// if equals (0 - 0)
-        System.out.println("Product Names is not equals: " + example.getItem().compareTo(new Camera())); // if not equals (-1 - -1)
+        System.out.println("Product Names are equals: " + example.getItem().compareTo(new Phone(121, "Phone111")));// if equals (0 - 0)
+        System.out.println("Product Names are not equals: " + example.getItem().compareTo(new Camera("WorkCamera1", "RX71"))); // if not equals (-1 - -1)
+
+
+
+        Camera camera = new Camera("WorkCamera22", "RX722");
+        Camera camera1 = new Camera("WorkCamera22", "RX722");
+        Phone phone = new Phone(12, "Phone11");
+        Phone phone1 = new Phone(12, "Phone1");
+        System.out.println("Products are not equals: " + phone.compareTo(phone1));
+        System.out.println("Products are equals: " + camera.compareTo(camera1));
+        //System.out.println("Products are not equals: " + camera.compareTo(phone));//todo ask V why
+
     }
 
     private static void copy(List<? extends Product> list1, List<? super Product> list) {

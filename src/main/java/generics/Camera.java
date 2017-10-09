@@ -2,12 +2,13 @@ package generics;
 
 import com.google.common.base.MoreObjects;
 
+
 /**
  * Created by denys.pastushenko on 04/10/2017.
  */
-public class Camera extends Product {
-    private String nameOfTheCamera = "Name";
-    private String model = "Model -- 1";
+public class Camera extends Product<Camera> {
+    private String nameOfTheCamera;
+    private String model;
 
     public String getModel() {
         return model;
@@ -24,5 +25,10 @@ public class Camera extends Product {
                 .add("nameOfTheCamera", nameOfTheCamera)
                 .add("model", model)
                 .toString();
+    }
+
+    public Camera(String nameOfTheCamera, String model) {
+        this.nameOfTheCamera = nameOfTheCamera;
+        this.model = model;
     }
 }
