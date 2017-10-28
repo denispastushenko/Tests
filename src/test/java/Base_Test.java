@@ -1,5 +1,7 @@
+import io.github.bonigarcia.wdm.ChromeDriverManager;
 import io.github.bonigarcia.wdm.FirefoxDriverManager;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -14,12 +16,12 @@ public class Base_Test {
 
   @BeforeClass
       public static void webDriverManager(){
-          FirefoxDriverManager.getInstance().version("15.0").setup();
+          ChromeDriverManager.getInstance().setup();
 
       }
     @BeforeMethod
     public void setUp() {
-        webDriver = new FirefoxDriver();
+        webDriver = new ChromeDriver();
         webDriver.manage().window().maximize();
     }
 
