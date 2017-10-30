@@ -44,20 +44,21 @@ public class Main {
         queue.add(2);
         queue.add(1);
 
-        while ((dataObject = queue.poll()) != null){
+        while ((dataObject = queue.poll()) != null) {
             System.out.println(dataObject);
 
 
-        Object dataObject1;
-        Queue<Integer> queue1 = new PriorityQueue<>();
-        queue1.add(5);
-        queue1.add(4);
-        queue1.add(3);
-        queue1.add(2);
-        queue1.add(1);
+            Object dataObject1;
+            Queue<Integer> queue1 = new PriorityQueue<>();
+            queue1.add(5);
+            queue1.add(4);
+            queue1.add(3);
+            queue1.add(2);
+            queue1.add(1);
 
-        while ((dataObject1 = queue1.poll()) != null){
-            System.out.println(dataObject1);
+            while ((dataObject1 = queue1.poll()) != null) {
+                System.out.println(dataObject1);
+            }
         }
     }
 }
