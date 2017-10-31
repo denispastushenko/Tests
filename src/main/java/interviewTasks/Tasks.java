@@ -5,6 +5,8 @@ import org.springframework.util.StringUtils;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static org.apache.commons.lang3.StringUtils.reverse;
+
 /**
  * Created by denys.pastushenko on 31/10/2017.
  */
@@ -12,8 +14,9 @@ public class Tasks {
 
     public static void main(String[] args) {
         // Task 1;
-        System.out.println(reverseString("example"));
+        System.out.println(reverseStringSpring("example"));
         System.out.println(reverseString());
+        System.out.println(reverseString("String"));
         System.out.println();
 
         //Task 2
@@ -28,10 +31,14 @@ public class Tasks {
 
     }
 
-    private static String reverseString(String string) {
+    private static String reverseStringSpring(String string) {
         List<String> list = Arrays.stream(string.split("")).collect(Collectors.toList());
         Collections.reverse(list);
         return StringUtils.collectionToCommaDelimitedString(list).replace(",", "");
+    }
+
+    private static String reverseString(String string) {
+        return reverse(string);
     }
 
     private static String reverseString() {
