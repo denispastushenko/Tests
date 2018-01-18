@@ -52,7 +52,7 @@ public class MainClassExecutor {
                         downloadVideo(video, FILE_WAY_FOR_VIDEO));
         System.out.println(stringList);
         System.out.println(stringList.size());*/
-        System.out.println(executePostRequest("https://www.instagram.com/virusvideo/"));
+        System.out.println(executePostRequest("https://www.instagram.com/query/"));
     }
 
 
@@ -70,8 +70,36 @@ public class MainClassExecutor {
                     .useExpectContinue()
                     .version(HttpVersion.HTTP_1_1)
                     .bodyForm(Form.form()
-                            .add("ig_user",  "1513656504")
-                            .add("media.after",  "AQDEehkRRGwFv5JKWVmkE_qgW9ayk2DN1s7X6pkr6ftO_43kJE92t7xZ9D8i6zeTTp7EtCRFbL2E77Kdtejc1i7gbBP_cCaESoWUwjH_5dB3Jg")
+                            .add("q",  "ig_user(1513656504) { media.after(AQDEehkRRGwFv5JKWVmkE_qgW9ayk2DN1s7X6pkr6ftO_43kJE92t7xZ9D8i6zeTTp7EtCRFbL2E77Kdtejc1i7gbBP_cCaESoWUwjH_5dB3Jg, 12) {\n" +
+                                    "  count,\n" +
+                                    "  nodes {\n" +
+                                    "    __typename,\n" +
+                                    "    caption,\n" +
+                                    "    code,\n" +
+                                    "    comments {\n" +
+                                    "      count\n" +
+                                    "    },\n" +
+                                    "    comments_disabled,\n" +
+                                    "    date,\n" +
+                                    "    dimensions {\n" +
+                                    "      height,\n" +
+                                    "      width\n" +
+                                    "    },\n" +
+                                    "    display_src,\n" +
+                                    "    id,\n" +
+                                    "    is_video,\n" +
+                                    "    likes {\n" +
+                                    "      count\n" +
+                                    "    },\n" +
+                                    "    owner {\n" +
+                                    "      id\n" +
+                                    "    },\n" +
+                                    "    thumbnail_src,\n" +
+                                    "    video_views\n" +
+                                    "  },\n" +
+                                    "  page_info\n" +
+                                    "}\n" +
+                                    " }")
                             .build())
                     .execute()
                     .returnContent()
