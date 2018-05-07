@@ -2,6 +2,7 @@ package interviewTasks;
 
 import org.springframework.util.StringUtils;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -10,7 +11,7 @@ import static org.apache.commons.lang3.StringUtils.reverse;
 /**
  * Created by denys.pastushenko on 31/10/2017.
  */
-public class Tasks {
+public class Tasks extends Test {
 
     public static void main(String[] args) {
         // Task 1;
@@ -71,4 +72,21 @@ public class Tasks {
         }
         return null;
     }
+
+    @Override
+    protected Double h(String com, String com1) throws IOException {
+        System.out.println(com + com1);
+        return 1.1;
+    }
+
+   /* public Number h(String com, String com1) throws Exception{
+        System.out.println(com + com1);
+       return 1;
+    }
+
+    public Number h(String com, String com1) throws Exception{
+        System.out.println(com + com1);
+        return 1;
+    }*/
+
 }
