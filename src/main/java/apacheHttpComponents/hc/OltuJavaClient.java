@@ -14,7 +14,7 @@ import org.testng.Assert;
 
 import java.io.IOException;
 
-import static org.apache.http.client.fluent.Form.*;
+import static org.apache.http.client.fluent.Form.form;
 
 public class OltuJavaClient {
 
@@ -56,7 +56,7 @@ public class OltuJavaClient {
                 .execute().returnResponse();
 
         Assert.assertEquals(response_POST.getStatusLine().getStatusCode(), 201);
-        System.out.println("User was created: " + response_POST.getStatusLine().getStatusCode());
+        System.out.println("POST -- User was created: " + response_POST.getStatusLine().getStatusCode());
 
         //Is User Exists
         HttpResponse response_Get = Request.Get(DOMAIN + "/aldowebservices/vcomp/" + LOCALE + "/users?login=" + EMAIL)
@@ -64,7 +64,7 @@ public class OltuJavaClient {
                 .execute().returnResponse();
 
         Assert.assertEquals(response_Get.getStatusLine().getStatusCode(), 200);
-        System.out.println("Get is user exists: " + response_Get.getStatusLine().getStatusCode());
+        System.out.println("GET -- Get is user exists: " + response_Get.getStatusLine().getStatusCode());
 
         // Get Profile
         HttpResponse response_Get_Profile = Request.Get(DOMAIN + "/aldowebservices/v2/" + LOCALE + "/users/" + EMAIL)
@@ -73,19 +73,19 @@ public class OltuJavaClient {
                 .execute().returnResponse();
 
         Assert.assertEquals(response_Get_Profile.getStatusLine().getStatusCode(), 200);
-        System.out.println("Get profile: " + response_Get_Profile.getStatusLine().getStatusCode());
+        System.out.println("GET -- Get profile: " + response_Get_Profile.getStatusLine().getStatusCode());
 
         // Update email
-        HttpResponse response_PUT =  Request.Put(DOMAIN + "/aldowebservices/v2/" + LOCALE + "/users/" + EMAIL + "/login")
+        HttpResponse response_PUT = Request.Put(DOMAIN + "/aldowebservices/v2/" + LOCALE + "/users/" + EMAIL + "/login")
                 .addHeader("Authorization", "Bearer " + server_token)
-                .addHeader("Authorization",  user_token)
+                .addHeader("Authorization", user_token)
                 .addHeader("Content-Type", "application/x-www-form-urlencoded")
                 .bodyForm(form().add("newLogin", "1234" + EMAIL)
                         .add("password", "Test123").build())
                 .execute().returnResponse();
 
         Assert.assertEquals(response_PUT.getStatusLine().getStatusCode(), 200);
-        System.out.println("Update email: " + response_PUT.getStatusLine().getStatusCode());
+        System.out.println("PUT -- Update email: " + response_PUT.getStatusLine().getStatusCode());
     }
 
     private static String generateEmail() {
