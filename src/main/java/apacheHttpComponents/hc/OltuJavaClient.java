@@ -76,9 +76,9 @@ public class OltuJavaClient {
         System.out.println("Get profile: " + response_Get_Profile.getStatusLine().getStatusCode());
 
         // Update email
-        HttpResponse response_PUT =  Request.Put(DOMAIN + "/aldowebservices/v2" + LOCALE + "/users/" + EMAIL + "/login")
+        HttpResponse response_PUT =  Request.Put(DOMAIN + "/aldowebservices/v2/" + LOCALE + "/users/" + EMAIL + "/login")
                 .addHeader("Authorization", "Bearer " + server_token)
-                .addHeader("Authorization", "Bearer " + user_token)
+                .addHeader("Authorization",  user_token)
                 .addHeader("Content-Type", "application/x-www-form-urlencoded")
                 .bodyForm(form().add("newLogin", "1234" + EMAIL)
                         .add("password", "Test123").build())
