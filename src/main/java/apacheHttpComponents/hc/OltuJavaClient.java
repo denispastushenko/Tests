@@ -35,13 +35,17 @@ public class OltuJavaClient {
     private static final String EMAIL = generateEmail();
 
 
-
-
     public static void main(String[] args) throws IOException, OAuthProblemException, OAuthSystemException {
+
+        //Generate tokens
+        String user_token = getUserToken();
+        String server_token = getServerToken();
+        System.out.println("Server Token: " + user_token);
+        System.out.println("User Token: " + server_token);
 
         // Create User
         HttpResponse response_POST = Request.Post(DOMAIN + "/aldowebservices/vcomp/" + LOCALE + "/users?isEmailSignedUp=false")
-                .addHeader("Authorization", "Bearer " + getServerToken())
+                .addHeader("Authorization", "Bearer " + server_token)
                 .addHeader("Content-Type", "application/x-www-form-urlencoded")
                 .bodyForm(form().add("login", EMAIL)
                         .add("password", PASS)
@@ -54,10 +58,9 @@ public class OltuJavaClient {
         Assert.assertEquals(response_POST.getStatusLine().getStatusCode(), 201);
         System.out.println("User was created: " + response_POST.getStatusLine().getStatusCode());
 
-
         //Is User Exists
         HttpResponse response_Get = Request.Get(DOMAIN + "/aldowebservices/vcomp/" + LOCALE + "/users?login=" + EMAIL)
-                .addHeader("Authorization", "Bearer " + getServerToken())
+                .addHeader("Authorization", "Bearer " + server_token)
                 .execute().returnResponse();
 
         Assert.assertEquals(response_Get.getStatusLine().getStatusCode(), 200);
@@ -65,27 +68,24 @@ public class OltuJavaClient {
 
         // Get Profile
         HttpResponse response_Get_Profile = Request.Get(DOMAIN + "/aldowebservices/v2/" + LOCALE + "/users/" + EMAIL)
-                .addHeader("Authorization", "Bearer " + getServerToken())
-                .addHeader("Authorization", "Bearer " + getUserToken())
+                .addHeader("Authorization", "Bearer " + server_token)
+                .addHeader("Authorization", "Bearer " + user_token)
                 .execute().returnResponse();
 
         Assert.assertEquals(response_Get_Profile.getStatusLine().getStatusCode(), 200);
         System.out.println("Get profile: " + response_Get_Profile.getStatusLine().getStatusCode());
 
-      /*  HttpResponse response_PUT =  Request.Put("https://perf-hyb.aldoshoes.com/aldowebservices/v2/usAldo/users/ssatest@gmail.com/login")
+        // Update email
+        HttpResponse response_PUT =  Request.Put(DOMAIN + "/aldowebservices/v2" + LOCALE + "/users/" + EMAIL + "/login")
+                .addHeader("Authorization", "Bearer " + server_token)
                 .addHeader("Authorization", "Bearer " + user_token)
                 .addHeader("Content-Type", "application/x-www-form-urlencoded")
-                .bodyForm(form().add("newLogin", "ssatest@gmail.com")
+                .bodyForm(form().add("newLogin", "1234" + EMAIL)
                         .add("password", "Test123").build())
                 .execute().returnResponse();
 
-        System.out.println(response_PUT.getStatusLine().getStatusCode());
-        System.out.println(response_PUT);
         Assert.assertEquals(response_PUT.getStatusLine().getStatusCode(), 200);
-
-      */
-
-
+        System.out.println("Update email: " + response_PUT.getStatusLine().getStatusCode());
     }
 
     private static String generateEmail() {
@@ -108,8 +108,6 @@ public class OltuJavaClient {
                         .setClientId(CLIENT_ID)
                         .setClientSecret(CLIENT_SECRET)
                         .buildQueryMessage();
-        System.out.println("Server Token: " + getAccessToken(request_Server));
-
         return getAccessToken(request_Server);
     }
 
@@ -122,7 +120,6 @@ public class OltuJavaClient {
                         .setClientSecret(CLIENT_SECRET)
                         .setParameter("sitename", "usAldo")
                         .buildQueryMessage();
-        System.out.println("User Token: " + getAccessToken(request_User));
         return getAccessToken(request_User);
     }
 
