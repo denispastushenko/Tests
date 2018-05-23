@@ -2,7 +2,6 @@ package apacheHttpComponents.hc;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.fluent.Form;
 import org.apache.http.client.fluent.Request;
 import org.apache.oltu.oauth2.client.OAuthClient;
 import org.apache.oltu.oauth2.client.URLConnectionClient;
@@ -14,10 +13,6 @@ import org.apache.oltu.oauth2.common.message.types.GrantType;
 import org.testng.Assert;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.security.SecureRandom;
-import java.util.Random;
 
 import static org.apache.http.client.fluent.Form.*;
 
@@ -33,28 +28,49 @@ public class OltuJavaClient {
 
     private static final String PASS = "Test123";
 
-    private static String generateEmail(){
-        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        return RandomStringUtils.random(10, characters) + "@gmail.com";
-    }
+    private static final String DOMAIN = "https://perf-hyb.aldoshoes.com";
+
+    private static final String LOCALE = "usAldo";
+
+    private static final String EMAIL = generateEmail();
 
 
-    public static void main(String[] args) throws IOException {
 
-          HttpResponse response_POST = Request.Post("https://perf-hyb.aldoshoes.com/aldowebservices/vcomp/usAldo/users?isEmailSignedUp=false")
-                .addHeader("Authorization", server_token)
+
+    public static void main(String[] args) throws IOException, OAuthProblemException, OAuthSystemException {
+
+        // Create User
+        HttpResponse response_POST = Request.Post(DOMAIN + "/aldowebservices/vcomp/" + LOCALE + "/users?isEmailSignedUp=false")
+                .addHeader("Authorization", "Bearer " + getServerToken())
                 .addHeader("Content-Type", "application/x-www-form-urlencoded")
-                .bodyForm(form().add("login", "ssatest@gmail.com")
-                        .add("password", "Test123")
-                        .add("firstName", "Diego").add("lastName", "Aristizabal")
-                        .add("titleCode", "mr").add("isEmailSignedUp", "true").build())
+                .bodyForm(form().add("login", EMAIL)
+                        .add("password", PASS)
+                        .add("firstName", "Diego")
+                        .add("lastName", "Aristizabal")
+                        .add("titleCode", "mr")
+                        .add("isEmailSignedUp", "true").build())
                 .execute().returnResponse();
 
-        System.out.println(response_POST.getStatusLine().getStatusCode());
-        System.out.println(response_POST);
-        Assert.assertEquals(response_POST.getStatusLine().getStatusCode(), 200);
+        Assert.assertEquals(response_POST.getStatusLine().getStatusCode(), 201);
+        System.out.println("User was created: " + response_POST.getStatusLine().getStatusCode());
 
 
+        //Is User Exists
+        HttpResponse response_Get = Request.Get(DOMAIN + "/aldowebservices/vcomp/" + LOCALE + "/users?login=" + EMAIL)
+                .addHeader("Authorization", "Bearer " + getServerToken())
+                .execute().returnResponse();
+
+        Assert.assertEquals(response_Get.getStatusLine().getStatusCode(), 200);
+        System.out.println("Get is user exists: " + response_Get.getStatusLine().getStatusCode());
+
+        // Get Profile
+        HttpResponse response_Get_Profile = Request.Get(DOMAIN + "/aldowebservices/v2/" + LOCALE + "/users/" + EMAIL)
+                .addHeader("Authorization", "Bearer " + getServerToken())
+                .addHeader("Authorization", "Bearer " + getUserToken())
+                .execute().returnResponse();
+
+        Assert.assertEquals(response_Get_Profile.getStatusLine().getStatusCode(), 200);
+        System.out.println("Get profile: " + response_Get_Profile.getStatusLine().getStatusCode());
 
       /*  HttpResponse response_PUT =  Request.Put("https://perf-hyb.aldoshoes.com/aldowebservices/v2/usAldo/users/ssatest@gmail.com/login")
                 .addHeader("Authorization", "Bearer " + user_token)
@@ -67,16 +83,14 @@ public class OltuJavaClient {
         System.out.println(response_PUT);
         Assert.assertEquals(response_PUT.getStatusLine().getStatusCode(), 200);
 
-        HttpResponse response_Get = (Request.Get("https://perf-hyb.aldoshoes.com/aldowebservices/v2/usAldo/users/ssatest@gmail.com")
-                .execute().returnResponse());
-
-        System.out.println(response_Get.getStatusLine().getStatusCode());
-        System.out.println(response_Get);
-        Assert.assertEquals(response_Get.getStatusLine().getStatusCode(), 200);*/
+      */
 
 
+    }
 
-*/
+    private static String generateEmail() {
+        String characters = "abcdefghijklmnopqrstuvwxyz0123456789";
+        return "ssatesters" + RandomStringUtils.random(10, characters) + "@gmail.com";
     }
 
     private static OAuthClientRequest.TokenRequestBuilder getTokenRequestBuilder(GrantType password) {
